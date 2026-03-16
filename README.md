@@ -1,4 +1,4 @@
-# • EntryEye
+# • EnterEye
 
 **Smart Classroom Attendance & Exit Tracking System**
 
