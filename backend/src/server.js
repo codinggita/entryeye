@@ -1,6 +1,31 @@
+const http = require('http');
+const { Server } = require('socket.io');
 const config = require('./config/env');
 const app = require('./app');
 const connectDB = require('./config/db');
+
+// Create HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.io
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+// Attach io to app for use in controllers
+app.set('socketio', io);
+
+// Socket.io Connection Logic
+io.on('connection', (socket) => {
+  console.log('Client connected:', socket.id);
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
+});
 
 // Start Server
 const startServer = async () => {
@@ -13,7 +38,7 @@ const startServer = async () => {
 
     const PORT = config.port || 5000;
     
-    app.listen(PORT, '0.0.0.0', () => {
+    server.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running on port ${PORT}`);
       console.log('Routes loaded...');
     });
