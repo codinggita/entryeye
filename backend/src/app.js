@@ -3,6 +3,7 @@ const cors = require('cors');
 const routes = require('./routes');
 const authRoutes = require('./routes/authRoutes');
 const batchRoutes = require('./routes/batchRoutes');
+const studentRoutes = require('./routes/studentRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -28,7 +29,8 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/batches', batchRoutes);
-app.use('/', routes);
+app.use('/api/students', studentRoutes);
+
 
 // Error Handling Middleware
 app.use(errorHandler);
